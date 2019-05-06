@@ -1,7 +1,16 @@
+require 'rest-client'
+
 class Api::V1::UserLyricsController < ApplicationController
 
   def index
-    @user_lyrics = UserLyric.all
+    # @user_lyrics = UserLyric.all
+    user = User.find(params[:id])
+
+    # response = RestClient.get()
+    # lyric = JSON.parse(response);
+    # new_lyric = Lyric.create()
+
+
     render json: @user_lyrics
   end
 
