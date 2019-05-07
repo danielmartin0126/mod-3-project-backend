@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       resources :users, only: [:index, :update, :create]
       resources :lyrics, only: [:index, :update]
       resources :user_lyrics, only: [:index, :update, :create]
+      get '/lyrics/:user_id/new_song', to: "lyrics#new_song"
     end
   end
 

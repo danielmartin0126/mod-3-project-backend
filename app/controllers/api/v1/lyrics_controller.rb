@@ -5,16 +5,23 @@ class Api::V1::LyricsController < ApplicationController
   end
 
   def new_song
-    user = User.find(params[:id])
-    @lyric = Lyric.all.sample
+    user = User.find(params[:user_id])
+    if user.user_lyrics.all.length == Lyric.all.length
+      lyric = {error: "You are out of songs"}
+      
+    else
+      lyric = Lyric.all.sample
+  
+      
+      while UserLyric.find_by(user_id: user.id, lyric_id: lyric.id)
+        lyric = Lyric.all.sample
+      end
+  
+      UserLyric.create(user_id: user.id, lyric_id: lyric.id)
     
-    while UserLyric.find_by(user_id: user.id, lyric_id: lyric.id)
-      @lyric = Lyric.all.sample
     end
 
-    UserLyric.create(user_id: user.id, lyric_id: lyric.id)
-
-    render json: @lyric
+    render json: lyric
   end
 
 end
